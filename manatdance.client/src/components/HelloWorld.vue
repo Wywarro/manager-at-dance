@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h1>{{ apiResponse }}</h1>
+    <button class="clickable" @click="testFlask">Yolo</button>
   </div>
 </template>
 
@@ -17,14 +18,18 @@ import { Options, Vue } from "vue-class-component";
 export default class HelloWorld extends Vue {
   msg!: string;
 
-  private apiResponse: string;
+  apiResponse = "";
 
   async created() {
+    await this.testFlask();
+  }
+
+  async testFlask() {
     try {
       const response = await api.get("/");
       this.apiResponse = response.data;
     } catch (error) {
-      alert(error.data);
+      alert(error);
     }
   }
 }

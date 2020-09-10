@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="-webkit-app-region: drag">
     <div id="nav">
       <router-link to="/">Home</router-link>
     </div>
@@ -27,5 +27,9 @@
       color: #42b983;
     }
   }
+}
+
+.clickable {
+  -webkit-app-region: no-drag;
 }
 </style>

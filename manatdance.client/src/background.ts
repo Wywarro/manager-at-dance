@@ -14,7 +14,7 @@ protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } }
 ]);
 
-function createWindow() {
+async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
       width: 1200,
@@ -30,7 +30,7 @@ function createWindow() {
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
+    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
     if (!process.env.IS_TEST) win.webContents.openDevTools();
   } else {
     createProtocol("app");
@@ -41,19 +41,16 @@ function createWindow() {
   win.on("closed", () => {
     win = null;
   });
-
-  var pyshell = require("python-shell");
-  pyshell.run("../main.py", (err: any) => {
-      if (err) console.log(err);
-  }); 
 }
 
+var subpy: any;
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") {
     app.quit();
+    subpy.kill('SIGINT');
   }
 });
 
@@ -72,12 +69,17 @@ app.on("ready", async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
-      await installExtension(VUEJS_DEVTOOLS);
+      // await installExtension(VUEJS_DEVTOOLS);
     } catch (e) {
       console.error("Vue Devtools failed to install:", e.toString());
     }
   }
-  createWindow();
+    // call python?
+    subpy = require("child_process").spawn("manatdance.api/venv/Scripts/python", ["manatdance.api/main.py"]);
+    // subpy = require('child_process').spawn('./dist/main.exe');
+    var rq = require("request-promise");
+
+    createWindow();
 });
 
 // Exit cleanly on request from parent process in development mode.
@@ -86,11 +88,13 @@ if (isDevelopment) {
     process.on("message", data => {
       if (data === "graceful-exit") {
         app.quit();
+        subpy.kill('SIGINT');
       }
     });
   } else {
     process.on("SIGTERM", () => {
       app.quit();
+      subpy.kill('SIGINT');
     });
   }
 }

@@ -1,0 +1,4 @@
+Flask-Cors==3.0.9
+Flask==1.1.2
+Flask-Cors==3.0.9
+pyzk==0.9
