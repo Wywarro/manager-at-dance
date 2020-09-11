@@ -19,8 +19,23 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm">
-    </div>
+      <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a 
+            class="nav-link"
+            :class="{ 'active' : tab == currentTab }" 
+            role="tab" 
+            v-for="tab in tabs" 
+            :key="tab"
+            @click="currentTab = tab"
+          >{{ tab }}</a>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="tab-content">
+          <div class="tab-pane fade show active"  role="tabpanel">...</div>
+        </div>
+      </div>
   </div>
 </div>
 </template>
@@ -30,9 +45,13 @@ import api from "../axios_instances/flask_api";
 import { Options, Vue } from "vue-class-component";
 
 export default class DeviceConnector extends Vue {
-  apiTestResponse: String = "";
-  connection: String = "";
-  deviceIp: String = "";
+  apiTestResponse: string = ``;
+  connection: string = ``;
+  deviceIp: string = ``;
+
+  currentTab: string = ``;
+
+  tabs: Array<string> = ["Users", "Device Info"];
 
   async created() {
     await this.testFlask();

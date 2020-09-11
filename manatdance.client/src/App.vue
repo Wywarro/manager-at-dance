@@ -1,9 +1,12 @@
 <template>
   <div id="app" style="-webkit-app-region: drag">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
+    <div id="body" class="container">
+      <div class="row">
+        <div class="col-sm">
+          <router-view />
+        </div>
+      </div>
     </div>
-    <router-view />
   </div>
 </template>
 
@@ -16,7 +19,7 @@
   color: #2c3e50;
 }
 
-#nav {
+#body {
   padding: 30px;
 
   a {
