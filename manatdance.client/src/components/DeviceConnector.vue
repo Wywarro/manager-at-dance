@@ -3,11 +3,6 @@
   <div class="row">
     <div class="col-sm">
       <h1>{{ apiTestResponse }}</h1>
-      <button 
-        type="button" 
-        class="btn btn-primary clickable" 
-        @click="getDeviceUsers"
-      >Get Users</button>
     </div>
     <div class="col-sm">
       <label for="basic-url">Device IP</label>
@@ -22,8 +17,9 @@
       {{ deviceIp }}
       {{ connection }}
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm">
-      One of three columns
     </div>
   </div>
 </div>
@@ -34,12 +30,9 @@ import api from "../axios_instances/flask_api";
 import { Options, Vue } from "vue-class-component";
 
 export default class DeviceConnector extends Vue {
-  apiTestResponse = "";
-  users = [];
-
-  connection = "";
-
-  deviceIp = "";
+  apiTestResponse: String = "";
+  connection: String = "";
+  deviceIp: String = "";
 
   async created() {
     await this.testFlask();
@@ -57,22 +50,10 @@ export default class DeviceConnector extends Vue {
 
   async connectToDevice() {
     try {
-      console.log(this.deviceIp);
       const response = await api.post("/connect", 
-        { "deviceIp": this.deviceIp }
+        { deviceIp: this.deviceIp }
       );
-      const { message } = response.data;
-      this.connection = message;
-    } catch (error) {
-      alert(error);
-    }
-  }
-
-  async getDeviceUsers() {
-    try {
-      const response = await api.get("/users");
-      const { users } = response.data;
-      this.users = users;
+      this.connection = response.data;
     } catch (error) {
       alert(error);
     }

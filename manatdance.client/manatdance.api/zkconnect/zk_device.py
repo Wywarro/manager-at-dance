@@ -5,13 +5,15 @@ from .singleton import Singleton
 
 class ZkDeviceConnector(metaclass=Singleton):
 
+    ip = ""
+
     def change_ip(self, ip):
         """Change IP of device"""
         self.ip = ip
         self.zk = ZK(self.ip, port=4370, timeout=5, force_udp=True)
 
     def connect(self) -> ZK:
-        if !self.zk.is_connect:
+        if not self.zk.is_connect:
             self.zk.connect()
 
         return self.zk
@@ -35,10 +37,11 @@ class ZkDeviceConnector(metaclass=Singleton):
             "deviceName": zk.get_device_name(),
             "macAddress": zk.get_mac(),
             "networkParams": zk.get_network_params(),
-            "deviceTime": zk.get_time,
-            "platformName": zk.get_platform()
-            "serialNumber": zk.get_serialnumber()
+            "deviceTime": zk.get_time(),
+            "platformName": zk.get_platform(),
+            "serialNumber": zk.get_serialnumber(),
         }
+        print(device_info)
         return device_info
 
     def get_users_from_device(self) -> list:

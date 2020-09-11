@@ -22,9 +22,7 @@ def connectToDevice():
     zk_device = ZkDeviceConnector()
     zk_device.change_ip(device.deviceIp)
 
-    return jsonify({
-        'message': zk_device.test_connection()
-    })
+    return jsonify(zk_device.test_connection())
 
 
 @app.route('/device-info', methods=["GET"])
@@ -34,17 +32,15 @@ def getDeviceInfo():
     device = Device(**device_request)
     zk_device = ZkDeviceConnector()
 
-    return jsonify({
-        'message': zk_device.get_info_about_device()
-    })
+    return jsonify(zk_device.get_info_about_device())
 
 
 @app.route('/users', methods=["GET"])
 @cross_origin()
 def getUsers():
     dev_connector = ZkDeviceConnector()
-    return jsonify({'users': dev_connector.get_users_from_device()})
+    return jsonify(dev_connector.get_users_from_device())
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=3000, debug=True)
