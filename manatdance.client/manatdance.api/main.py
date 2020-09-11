@@ -19,10 +19,27 @@ def testCall():
 def connectToDevice():
     device_request = dict(request.get_json())
     device = Device(**device_request)
-    return jsonify({'message': device.deviceIp})
+    zk_device = ZkDeviceConnector()
+    zk_device.change_ip(device.deviceIp)
+
+    return jsonify({
+        'message': zk_device.test_connection()
+    })
 
 
-@app.route('/users')
+@app.route('/device-info', methods=["GET"])
+@cross_origin()
+def getDeviceInfo():
+    device_request = dict(request.get_json())
+    device = Device(**device_request)
+    zk_device = ZkDeviceConnector()
+
+    return jsonify({
+        'message': zk_device.get_info_about_device()
+    })
+
+
+@app.route('/users', methods=["GET"])
 @cross_origin()
 def getUsers():
     dev_connector = ZkDeviceConnector()
