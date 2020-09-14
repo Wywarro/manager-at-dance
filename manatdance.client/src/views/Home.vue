@@ -1,18 +1,20 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+  <div>
+    <SideBar />
     <DeviceConnector msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import SideBar from "@/components/SideBar.vue"; // @ is an alias to /src
 import DeviceConnector from "@/components/DeviceConnector.vue"; // @ is an alias to /src
 
 export default Vue.extend({
   name: "Home",
   components: {
-    DeviceConnector
-  }
+    DeviceConnector,
+    SideBar,
+  },
 });
 </script>

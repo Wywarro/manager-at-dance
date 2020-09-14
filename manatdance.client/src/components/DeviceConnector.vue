@@ -1,6 +1,10 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div>
+    <b-nav vertical pills class="sidebar">
+      <b-nav-item active>Active</b-nav-item>
+      <b-nav-item>Link</b-nav-item>
+      <b-nav-item>Another Link</b-nav-item>
+    </b-nav>
   </div>
 </template>
 
@@ -23,9 +27,6 @@ export default Vue.extend({
     deviceIp: "" as string,
     connection: "" as string,
   }),
-  props: {
-    msg: String,
-  },
   methods: {
     async getDeviceUsers() {
       const response = await getDeviceUsers();
@@ -51,18 +52,13 @@ export default Vue.extend({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.sidebar {
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  background: blue;
+  z-index: 2;
 }
 </style>

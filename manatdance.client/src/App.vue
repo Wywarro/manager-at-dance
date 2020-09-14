@@ -1,8 +1,5 @@
 <template>
   <div id="app" style="-webkit-app-region: drag">
-    <div id="body">
-      <router-link to="/">Home</router-link>
-    </div>
     <router-view />
     <notifications group="app" />
   </div>
@@ -35,5 +32,15 @@
 
 .clickable {
   -webkit-app-region: no-drag;
+}
+
+body,
+html,
+.container,
+.sidebar,
+.body {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
 }
 </style>
