@@ -7,31 +7,45 @@
 <script lang="ts">
 import Vue from "vue";
 
-import api from "../axios_instances/flask_api";
+import {
+  testFlask,
+  connectToDevice,
+  getDeviceInfo,
+  getDeviceUsers,
+} from "@/axios_instances/device.api";
 
 export default Vue.extend({
   name: "HelloWorld",
+  data: () => ({
+    users: [] as Array<unknown>,
+    deviceInfo: {} as Record<string, unknown>,
+    apiTestResponse: "" as string,
+    deviceIp: "" as string,
+    connection: "" as string,
+  }),
   props: {
-    msg: String
+    msg: String,
   },
   methods: {
     async getDeviceUsers() {
-      try {
-        const response = await api.get("/users");
-        this.users = response.data;
-      } catch (error) {
-        alert(error);
-      }
+      const response = await getDeviceUsers();
+      this.users = response.data;
     },
     async getDeviceInfo() {
-      try {
-        const response = await api.get("/device-info");
-        this.deviceInfo = response.data;
-      } catch (error) {
-        alert(error);
-      }
-    }
-  }
+      const response = await getDeviceInfo();
+      this.deviceInfo = response.data;
+    },
+    async testFlask() {
+      const response = await testFlask();
+      const { message } = response.data;
+      this.apiTestResponse = message;
+    },
+
+    async connectToDevice() {
+      const response = await connectToDevice(this.deviceIp);
+      this.connection = response.data;
+    },
+  },
 });
 </script>
 
