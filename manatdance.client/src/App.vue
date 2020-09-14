@@ -1,12 +1,9 @@
 <template>
   <div id="app" style="-webkit-app-region: drag">
-    <div id="body" class="container">
-      <div class="row">
-        <div class="col-sm">
-          <router-view />
-        </div>
-      </div>
+    <div id="body">
+      <router-link to="/">Home</router-link>
     </div>
+    <router-view />
   </div>
 </template>
 

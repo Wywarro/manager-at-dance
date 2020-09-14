@@ -14,23 +14,24 @@ protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } }
 ]);
 
-async function createWindow() {
+function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
-      width: 1200,
-      height: 700,
-      frame: false,
-      titleBarStyle: "hiddenInset",
-      webPreferences: {
-          // Use pluginOptions.nodeIntegration, leave this alone
-          // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-          nodeIntegration: (process.env.ELECTRON_NODE_INTEGRATION as unknown) as boolean,
-      },
+    width: 1200,
+    height: 700,
+    frame: false,
+    titleBarStyle: "hiddenInset",
+    webPreferences: {
+      // Use pluginOptions.nodeIntegration, leave this alone
+      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+      nodeIntegration: (process.env
+        .ELECTRON_NODE_INTEGRATION as unknown) as boolean
+    }
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
+    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
     if (!process.env.IS_TEST) win.webContents.openDevTools();
   } else {
     createProtocol("app");
@@ -49,8 +50,8 @@ app.on("window-all-closed", () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") {
-    app.quit();
     subpy.kill('SIGINT');
+    app.quit();
   }
 });
 
@@ -69,17 +70,17 @@ app.on("ready", async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
-      // await installExtension(VUEJS_DEVTOOLS);
+      await installExtension(VUEJS_DEVTOOLS);
     } catch (e) {
       console.error("Vue Devtools failed to install:", e.toString());
     }
   }
-    // call python?
-    subpy = require("child_process").spawn("manatdance.api/venv/Scripts/python", ["manatdance.api/main.py"]);
-    // subpy = require('child_process').spawn('./dist/main.exe');
-    var rq = require("request-promise");
+  // call python?
+  subpy = require("child_process").spawn("manatdance.api/venv/Scripts/python", ["manatdance.api/main.py"]);
+  // subpy = require('child_process').spawn('./dist/main.exe');
+  var rq = require("request-promise");
 
-    createWindow();
+  createWindow();
 });
 
 // Exit cleanly on request from parent process in development mode.
@@ -87,14 +88,14 @@ if (isDevelopment) {
   if (process.platform === "win32") {
     process.on("message", data => {
       if (data === "graceful-exit") {
-        app.quit();
         subpy.kill('SIGINT');
+        app.quit();
       }
     });
   } else {
     process.on("SIGTERM", () => {
-      app.quit();
       subpy.kill('SIGINT');
+      app.quit();
     });
   }
 }
