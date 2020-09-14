@@ -7,6 +7,7 @@
     >
       <b-nav-item
         v-for="tab in tabs"
+        class="clickable"
         :key="tab"
         :active="tab == currentTab"
         @click="currentTab = tab"
