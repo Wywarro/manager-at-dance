@@ -1,7 +1,7 @@
 <template>
   <div>
     <SideBar />
-    <DeviceConnector msg="Welcome to Your Vue.js + TypeScript App" />
+    <DeviceConnector />
   </div>
 </template>
 

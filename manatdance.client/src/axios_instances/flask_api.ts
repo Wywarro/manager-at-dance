@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 const flaskApi: AxiosInstance = axios.create({
   baseURL: "http://127.0.0.1:3000",

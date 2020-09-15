@@ -1,11 +1,13 @@
 <template>
-  <div 
+  <v-app 
     id="app" 
     style="-webkit-app-region: drag"
   >
-    <router-view />
-    <notifications group="app" />
-  </div>
+    <v-main>
+      <router-view />
+      <notifications group="app" />
+    </v-main>
+  </v-app>
 </template>
 
 <style lang="scss">
