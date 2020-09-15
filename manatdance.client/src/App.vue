@@ -1,5 +1,8 @@
 <template>
-  <div id="app" style="-webkit-app-region: drag">
+  <div 
+    id="app" 
+    style="-webkit-app-region: drag"
+  >
     <router-view />
     <notifications group="app" />
   </div>
@@ -12,9 +15,6 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
-  width: 1200px;
-  height: 700px;
 }
 
 #body {
