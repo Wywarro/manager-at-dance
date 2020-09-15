@@ -4,7 +4,7 @@
       v-model="drawer"
       color="teal"
       permanent
-      absolute
+      app
       dark
     >
       <v-list
@@ -24,8 +24,9 @@
         <v-list-item
           v-for="item in items"
           :key="item.title"
-          class="clickable text-left"
+          class="clickable text-left active"
           link
+          :to="item.link"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -48,9 +49,9 @@ export default Vue.extend({
     currentTab: "" as string,
     drawer: true as boolean,
     items: [
-      { title: "Connect", icon: "fas fa-plug"},
-      { title: "Device Info", icon: "fas fa-tablet-alt"},
-      { title: "Users", icon: "fas fa-users"},
+      { title: "Connect", icon: "fas fa-plug", link: "/"},
+      { title: "Device Info", icon: "fas fa-tablet-alt", link: "/device-info"},
+      { title: "Users", icon: "fas fa-users", link: "/users"},
     ] as Array<object>
   }),
 });
