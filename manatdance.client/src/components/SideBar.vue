@@ -16,6 +16,7 @@
           <v-list-item-content>
             <v-list-item-title>Device Attendance Manager</v-list-item-title>
             <v-list-item-subtitle>Manage your records</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ apiTestResponse }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
 
@@ -44,6 +45,10 @@
 <script lang="ts">
 import Vue from "vue";
 
+import {
+  testFlask,
+} from "@/axios_instances/device.api";
+
 export default Vue.extend({
   data: () => ({
     currentTab: "" as string,
@@ -52,8 +57,20 @@ export default Vue.extend({
       { title: "Connect", icon: "fas fa-plug", link: "/"},
       { title: "Device Info", icon: "fas fa-tablet-alt", link: "/device-info"},
       { title: "Users", icon: "fas fa-users", link: "/users"},
-    ] as Array<object>
+    ] as Array<object>,
+
+    apiTestResponse: "" as string,
   }),
+  created() {
+    this.testFlask();
+  },
+  methods: {
+    async testFlask() {
+      const response = await testFlask();
+      const { message } = response.data;
+      this.apiTestResponse = message;
+    },
+  }
 });
 </script>
 

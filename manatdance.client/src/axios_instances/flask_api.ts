@@ -7,14 +7,25 @@ const flaskApi: AxiosInstance = axios.create({
 });
 
 // interceptor to catch errors
+// eslint-disable-next-line
 const errorInterceptor = (error: any) => {
   // all the error responses
-  console.error(error.response.status, error.message);
-  Vue.notify({
-    group: "app",
-    title: error.response.status,
-    text: error.message,
-  });
+  const { response, message } = error;
+  if (response) {
+    const { status } = response;
+    console.error(status, message);
+    Vue.notify({
+      group: "app",
+      title: status,
+      text: message,
+    });
+  } else {
+    Vue.notify({
+      group: "app",
+      text: error,
+    });
+  }
+
   return Promise.reject(error);
 };
 

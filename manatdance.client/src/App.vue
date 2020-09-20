@@ -1,11 +1,15 @@
 <template>
   <v-app 
     id="app" 
-    style="-webkit-app-region: drag"
+    
   >
+  <!-- style="-webkit-app-region: drag" -->
     <v-main>
       <router-view />
-      <notifications group="app" />
+      <notifications
+        class="mt-6 mr-6"
+        group="app"
+      />
     </v-main>
   </v-app>
 </template>
@@ -34,6 +38,7 @@
 
 .clickable {
   -webkit-app-region: no-drag;
+  text-transform: none !important;
 }
 
 body,

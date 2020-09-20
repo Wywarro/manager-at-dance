@@ -14,20 +14,26 @@ class ZkDeviceConnector(metaclass=Singleton):
 
     def connect(self) -> ZK:
         if not self.zk.is_connect:
-            self.zk.connect()
+            try:
+                self.zk.connect()
+            except:
+                raise Exception("Connection failed")
 
         return self.zk
 
     def test_connection(self) -> dict:
         test = ZK_helper(self.ip)
-        conn = self.connect()
-        connection_tests = {
-            'ping': test.test_ping(),
-            'tcp': test.test_tcp(),
-            'udp': test.test_udp(),
-            'isConnected': self.zk.is_connect,
-            'isEnabled': self.zk.is_enabled,
-        }
+        try:
+            self.connect()
+        finally:
+            connection_tests = {
+                'ping': test.test_ping(),
+                'tcp': test.test_tcp(),
+                'udp': test.test_udp(),
+                'isConnected': self.zk.is_connect,
+                'isEnabled': self.zk.is_enabled,
+            }
+           
         return connection_tests
 
     def get_info_about_device(self) -> dict:
