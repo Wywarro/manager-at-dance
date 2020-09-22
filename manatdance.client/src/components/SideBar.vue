@@ -22,21 +22,23 @@
 
         <v-divider></v-divider>
 
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          class="clickable text-left active"
-          link
-          :to="item.link"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+        <template v-for="item in items">
+          <v-list-item
+            v-if="!item.requireConnection ^ connectedToDevice"
+            :key="item.title"
+            class="clickable text-left active"
+            link
+            :to="item.link"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
       </v-list>
     </v-navigation-drawer>
   </v-container>
@@ -50,13 +52,17 @@ import {
 } from "@/axios_instances/device.api";
 
 export default Vue.extend({
+  props: {
+    connectedToDevice: Boolean
+  },
   data: () => ({
     currentTab: "" as string,
     drawer: true as boolean,
+
     items: [
-      { title: "Connect", icon: "fas fa-plug", link: "/"},
-      { title: "Device Info", icon: "fas fa-tablet-alt", link: "/device-info"},
-      { title: "Users", icon: "fas fa-users", link: "/users"},
+      { title: "Connect", icon: "fas fa-plug", link: "/", requireConnection: false},
+      { title: "Device Info", icon: "fas fa-tablet-alt", link: "/device-info", requireConnection: true},
+      { title: "Users", icon: "fas fa-users", link: "/users", requireConnection: true},
     ] as Array<object>,
 
     apiTestResponse: "" as string,

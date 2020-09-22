@@ -1,9 +1,9 @@
 <template>
   <v-app 
-    id="app" 
-    
+    id="app"
+    style="-webkit-app-region: drag"
   >
-  <!-- style="-webkit-app-region: drag" -->
+    <!--  -->
     <v-main>
       <router-view />
       <notifications

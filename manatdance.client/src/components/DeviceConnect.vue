@@ -20,6 +20,7 @@
       outlined
       height="250"
       :loading="connectLoading"
+      :color="color"
     >
       <v-card-title>Connection Status</v-card-title>
       <!-- { "isConnected": true, "isEnabled": true, "ping": true, "tcp": 10061, "udp": null } -->
@@ -33,28 +34,56 @@
 <script lang="ts">
 import Vue from "vue";
 
+import { DeviceConnection } from "@/types/types";
+
 import { connectToDevice } from "@/axios_instances/device.api";
 
+const getDefaultData = () => ({
+  connection: {
+    isConnected: false,
+    isEnabled: false,
+    ping: false,
+    tcp: null,
+    udp: null
+  } as DeviceConnection,
+  color: "" as string
+})
+
 export default Vue.extend({
-  name: "HelloWorld",
   data: () => ({
     deviceIp: "" as string,
-    connection: "" as string,
-
-    connectLoading: false as boolean
+    connectLoading: "false" as string,
+    ...getDefaultData()
   }),
   methods: {
     async connectToDevice() {
-      this.connectLoading = true;
+      if (this.connectLoading == "blue") return;
+      this.connectLoading = "blue";
+      this.resetData();
+
       try {
         const response = await connectToDevice(this.deviceIp);
         this.connection = response.data;
+        this.color = "teal accent-3";
+        this.$emit("connection-established", true);
       } catch (error) {
-        this.connection = error;
+        this.connection = error.response.data;
+        this.color = "red darken-2";
+        this.$emit("connection-established", false);
       } finally {
-        this.connectLoading = false;
+        this.connectLoading = "false";
       }
     },
+    resetData() {
+      console.log({ ...this.$data, ...getDefaultData() });
+      Object.assign(this.$data, { ...this.$data, ...getDefaultData() })
+    }
   },
 });
 </script>
+
+<style scoped lang="scss">
+::v-deep, .v-card {
+  transition: all 1s linear;
+}
+</style>

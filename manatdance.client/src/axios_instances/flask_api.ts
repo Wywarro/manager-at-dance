@@ -12,14 +12,15 @@ const errorInterceptor = (error: any) => {
   // all the error responses
   const { response, message } = error;
   if (response) {
-    const { status } = response;
+    const { status, data } = response;
     console.error(status, message);
     Vue.notify({
       group: "app",
       title: status,
-      text: message,
+      text: data,
     });
   } else {
+    console.error(response, message);
     Vue.notify({
       group: "app",
       text: error,

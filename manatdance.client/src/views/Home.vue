@@ -1,13 +1,13 @@
 <template>
   <div>
-    <SideBar />
+    <man-side-bar :connected-to-device="connectedToDevice" />
     <v-container class="fill-height">
       <v-row
         justify="center"
         align="center"
       >
         <v-col>
-          <router-view></router-view>
+          <router-view @connection-established="connectedToDevice = $event"></router-view>
         </v-col>
       </v-row>
     </v-container>
@@ -21,7 +21,10 @@ import SideBar from "@/components/SideBar.vue";
 export default Vue.extend({
   name: "Home",
   components: {
-    SideBar,
+    manSideBar: SideBar,
   },
+  data: () => ({
+    connectedToDevice: false as boolean
+  })
 });
 </script>
