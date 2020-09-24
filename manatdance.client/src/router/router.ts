@@ -1,33 +1,26 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
-import DeviceConnect from "../components/DeviceConnect.vue";
-import DeviceInfo from "../components/DeviceInfo.vue";
-import DeviceUsers from "../components/DeviceUsers.vue";
+import DeviceConnect from "../views/DeviceConnect.vue";
+import DeviceInfo from "../views/DeviceInfo.vue";
+import DeviceUsers from "../views/DeviceUsers.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
+    name: "DeviceConnect",
     path: "/",
-    component: Home,
-    children: [
-      {
-        name: "Home",
-        path: "",
-        component: DeviceConnect,
-      },
-      {
-        name: "deviceInfo",
-        path: "/device-info",
-        component: DeviceInfo,
-      },
-      {
-        name: "users",
-        path: "/users",
-        component: DeviceUsers,
-      },
-    ],
+    component: DeviceConnect,
+  },
+  {
+    name: "deviceInfo",
+    path: "/device-info",
+    component: DeviceInfo,
+  },
+  {
+    name: "users",
+    path: "/users",
+    component: DeviceUsers,
   },
 ];
 

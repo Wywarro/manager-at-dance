@@ -15,6 +15,7 @@
       color="teal"
       @click="connectToDevice"
     >Connect to Device</v-btn>
+    <man-connection></man-connection>
     <v-card
       class="mt-10"
       outlined
@@ -23,7 +24,6 @@
       :color="color"
     >
       <v-card-title>Connection Status</v-card-title>
-      <!-- { "isConnected": true, "isEnabled": true, "ping": true, "tcp": 10061, "udp": null } -->
       <v-card-subtitle>{{ connection }}</v-card-subtitle>
       
     </v-card>
@@ -34,8 +34,9 @@
 <script lang="ts">
 import Vue from "vue";
 
-import { DeviceConnection } from "@/types/types";
+import Connection from "@/components/Connection";
 
+import { DeviceConnection } from "@/types/types";
 import { connectToDevice } from "@/axios_instances/device.api";
 
 const getDefaultData = () => ({
@@ -55,6 +56,9 @@ export default Vue.extend({
     connectLoading: "false" as string,
     ...getDefaultData()
   }),
+  components: {
+    manConnection: Connection
+  },
   methods: {
     async connectToDevice() {
       if (this.connectLoading == "blue") return;

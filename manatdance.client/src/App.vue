@@ -1,18 +1,56 @@
 <template>
   <v-app 
     id="app"
-    style="-webkit-app-region: drag"
   >
-    <!--  -->
+    <man-side-bar :connected-to-device="connectedToDevice" />
+    <v-app-bar
+      app
+      clipped-left
+      dense
+      dark
+      flat
+      style="-webkit-app-region: drag"
+      color="light-blue darken-1"
+    >
+      <v-toolbar-title class="mr-12 align-center">
+        <span class="title">BeAtDance - Attendance Manager</span>
+      </v-toolbar-title>
+
+    </v-app-bar>
     <v-main>
-      <router-view />
-      <notifications
-        class="mt-6 mr-6"
-        group="app"
-      />
+      <v-container class="fill-height">
+        <v-row
+          justify="center"
+          align="center"
+        >
+          <v-col>
+            <router-view @connection-established="connectedToDevice = $event" />
+            <notifications
+              class="mt-6 mr-6"
+              group="app"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
   </v-app>
 </template>
+
+
+
+<script lang="ts">
+import Vue from "vue";
+import SideBar from "@/components/SideBar.vue";
+
+export default Vue.extend({
+  data: () => ({
+    connectedToDevice: false as boolean
+  }),
+  components: {
+    manSideBar: SideBar,
+  },
+});
+</script>
 
 <style lang="scss">
 #app {
