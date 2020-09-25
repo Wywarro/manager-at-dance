@@ -34,7 +34,7 @@
 <script lang="ts">
 import Vue from "vue";
 
-import Connection from "@/components/Connection";
+import Connection from "@/components/Connection.vue";
 
 import { DeviceConnection } from "@/types/types";
 import { connectToDevice } from "@/axios_instances/device.api";

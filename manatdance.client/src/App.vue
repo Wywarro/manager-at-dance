@@ -15,6 +15,19 @@
       <v-toolbar-title class="mr-12 align-center">
         <span class="title">BeAtDance - Attendance Manager</span>
       </v-toolbar-title>
+      <v-spacer />
+      <v-btn icon>
+        <v-icon>far fa-window-minimize</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>far fa-window-maximize</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>fas fa-times</v-icon>
+      </v-btn>
+
 
     </v-app-bar>
     <v-main>
@@ -41,6 +54,8 @@
 <script lang="ts">
 import Vue from "vue";
 import SideBar from "@/components/SideBar.vue";
+
+// import { remote } from "electron";
 
 export default Vue.extend({
   data: () => ({
