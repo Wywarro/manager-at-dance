@@ -41,7 +41,10 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container class="fill-height">
+      <v-container
+        class="fill-height"
+        style="max-width: 100%;"
+      >
         <v-row
           justify="center"
           align="center"
@@ -65,13 +68,12 @@
 import Vue from "vue";
 import SideBar from "@/components/SideBar.vue";
 
-import { remote } from 'electron';
-
+// import { remote } from 'electron';
 
 export default Vue.extend({
   data: () => ({
     connectedToDevice: false as boolean,
-    window: remote.getCurrentWindow(),
+    // window: remote.getCurrentWindow(),
 
     isMaximized: false
   }),
@@ -79,21 +81,21 @@ export default Vue.extend({
     manSideBar: SideBar,
   },
   methods: {
-    closeWindow() {
-      this.window.close();
-    },
-    maximizeWindow() {
-      if (this.isMaximized) {
-        this.window.unmaximize();
-        this.isMaximized = false;
-      } else {
-        this.window.maximize();
-        this.isMaximized = true;
-      }
-    },
-    minimizeWindow() {
-      this.window.minimize();
-    }
+    // closeWindow() {
+    //   this.window.close();
+    // },
+    // maximizeWindow() {
+    //   if (this.isMaximized) {
+    //     this.window.unmaximize();
+    //     this.isMaximized = false;
+    //   } else {
+    //     this.window.maximize();
+    //     this.isMaximized = true;
+    //   }
+    // },
+    // minimizeWindow() {
+    //   this.window.minimize();
+    // }
   }
 });
 </script>

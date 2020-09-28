@@ -15,26 +15,29 @@
       color="teal"
       @click="connectToDevice"
     >Connect to Device</v-btn>
-    <man-connection></man-connection>
-    <v-card
-      class="mt-10"
-      outlined
-      height="250"
-      :loading="connectLoading"
-      :color="color"
-    >
-      <v-card-title>Connection Status</v-card-title>
-      <v-card-subtitle>{{ connection }}</v-card-subtitle>
+    <v-row>
+      <v-col
+        v-for="(value, name) in connection"
+        lg="3"
+        :key="name"
+      >
+        <v-card
+          class="mt-10 status-card"
+          :style="{ 'border-left-color': color }"
+          outlined
+          :loading="connectLoading"
+        >
+          <v-card-title>{{ name }}</v-card-title>
+          <v-card-subtitle>{{ value }}</v-card-subtitle>
       
-    </v-card>
-    
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-
-import Connection from "@/components/Connection.vue";
 
 import { DeviceConnection } from "@/types/types";
 import { connectToDevice } from "@/axios_instances/device.api";
@@ -44,10 +47,10 @@ const getDefaultData = () => ({
     isConnected: false,
     isEnabled: false,
     ping: false,
-    tcp: null,
-    udp: null
+    tcp: false,
+    udp: false
   } as DeviceConnection,
-  color: "" as string
+  color: "#D32F2F" as string,
 })
 
 export default Vue.extend({
@@ -56,8 +59,13 @@ export default Vue.extend({
     connectLoading: "false" as string,
     ...getDefaultData()
   }),
-  components: {
-    manConnection: Connection
+  computed: {
+    dangerColor() {
+      return "#D32F2F"
+    },
+    successColor() {
+      return "#1DE9B6"
+    }
   },
   methods: {
     async connectToDevice() {
@@ -68,11 +76,11 @@ export default Vue.extend({
       try {
         const response = await connectToDevice(this.deviceIp);
         this.connection = response.data;
-        this.color = "teal accent-3";
+        this.color = this.successColor;
         this.$emit("connection-established", true);
       } catch (error) {
         this.connection = error.response.data;
-        this.color = "red darken-2";
+        this.color = this.dangerColor;
         this.$emit("connection-established", false);
       } finally {
         this.connectLoading = "false";
@@ -89,5 +97,9 @@ export default Vue.extend({
 <style scoped lang="scss">
 ::v-deep, .v-card {
   transition: all 1s linear;
+}
+
+.status-card {
+  border-left-width: 10px;
 }
 </style>
