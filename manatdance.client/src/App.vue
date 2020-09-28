@@ -4,31 +4,41 @@
   >
     <man-side-bar :connected-to-device="connectedToDevice" />
     <v-app-bar
+      style="-webkit-app-region: drag"
+      color="light-blue darken-1"
       app
       clipped-left
       dense
       dark
       flat
-      style="-webkit-app-region: drag"
-      color="light-blue darken-1"
     >
       <v-toolbar-title class="mr-12 align-center">
         <span class="title">BeAtDance - Attendance Manager</span>
       </v-toolbar-title>
       <v-spacer />
-      <v-btn icon>
+      <v-btn
+        class="clickable window-manipulator elevation-0"
+        color="light-blue darken-1"
+        @click="minimizeWindow"
+      >
         <v-icon>far fa-window-minimize</v-icon>
       </v-btn>
 
-      <v-btn icon>
+      <v-btn
+        class="clickable window-manipulator elevation-0"
+        color="light-blue darken-1"
+        @click="maximizeWindow"
+      >
         <v-icon>far fa-window-maximize</v-icon>
       </v-btn>
 
-      <v-btn icon>
+      <v-btn
+        class="clickable window-manipulator elevation-0"
+        color="red darken-3"
+        @click="closeWindow"
+      >
         <v-icon>fas fa-times</v-icon>
       </v-btn>
-
-
     </v-app-bar>
     <v-main>
       <v-container class="fill-height">
@@ -55,19 +65,40 @@
 import Vue from "vue";
 import SideBar from "@/components/SideBar.vue";
 
-// import { remote } from "electron";
+import { remote } from 'electron';
+
 
 export default Vue.extend({
   data: () => ({
-    connectedToDevice: false as boolean
+    connectedToDevice: false as boolean,
+    window: remote.getCurrentWindow(),
+
+    isMaximized: false
   }),
   components: {
     manSideBar: SideBar,
   },
+  methods: {
+    closeWindow() {
+      this.window.close();
+    },
+    maximizeWindow() {
+      if (this.isMaximized) {
+        this.window.unmaximize();
+        this.isMaximized = false;
+      } else {
+        this.window.maximize();
+        this.isMaximized = true;
+      }
+    },
+    minimizeWindow() {
+      this.window.minimize();
+    }
+  }
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 #app {
   font-family: Lato, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -86,6 +117,20 @@ export default Vue.extend({
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+}
+
+::v-deep header > div.v-toolbar__content {
+  padding-right: 0px !important;
+}
+
+::v-deep .window-manipulator {
+  border-radius: 0px !important;
+  height: 100% !important;
+  font-size: 10px !important;
+
+  &:focus {
+    outline: 0px;
   }
 }
 
