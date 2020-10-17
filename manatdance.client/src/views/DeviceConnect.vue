@@ -1,36 +1,39 @@
 <template>
   <div>
-    <v-text-field
-      v-model="deviceIp"
-      class="clickable"
-      label="Device's IP"
-      outlined
-      dense
-      @keydown.enter="connectToDevice"
-    ></v-text-field>
-    <v-btn
-      class="clickable"
-      outlined
-      block
-      color="teal"
-      @click="connectToDevice"
-    >Connect to Device</v-btn>
-    <v-row>
+
+    <v-row style="max-width: 600px;">
       <v-col
-        v-for="(value, name) in connection"
-        lg="3"
-        :key="name"
+        lg="5"
       >
         <v-card
-          class="mt-10 status-card"
+          v-for="(value, name) in connection"
+          :key="name"
+          class="mb-4 status-card"
           :style="{ 'border-left-color': color }"
           outlined
           :loading="connectLoading"
         >
           <v-card-title>{{ name }}</v-card-title>
-          <v-card-subtitle>{{ value }}</v-card-subtitle>
+          <v-card-subtitle></v-card-subtitle>
       
         </v-card>
+      </v-col>
+      <v-col>
+        <v-text-field
+          v-model="deviceIp"
+          class="clickable"
+          label="Device's IP"
+          outlined
+          dense
+          @keydown.enter="connectToDevice"
+        ></v-text-field>
+        <v-btn
+          class="clickable"
+          outlined
+          block
+          color="teal"
+          @click="connectToDevice"
+        >Connect to Device</v-btn>
       </v-col>
     </v-row>
   </div>
