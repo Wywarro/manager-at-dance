@@ -1,5 +1,8 @@
 <template>
-  <v-simple-table>
+  <v-simple-table
+    fixed-header
+    height="800"
+  >
     <template v-slot:default>
       <thead>
         <tr>
@@ -13,7 +16,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="item in users"
+          v-for="item in userSorted"
           :key="item.name"
         >
           <td>{{ item.uid }}</td>
@@ -21,7 +24,7 @@
           <td>{{ item.card }}</td>
           <td>{{ item.group_id }}</td>
           <td>{{ item.password }}</td>
-          <td>{{ item.privilege }}</td>
+          <td>{{ userPrivilege(item.privilege) }}</td>
         </tr>
       </tbody>
     </template>
@@ -45,7 +48,7 @@ export default Vue.extend({
   },
   computed: {
     userSorted(): Array<DeviceUser> {
-      return this.users.sort((a, b) => a.name - b.name)
+      return [...this.users].sort((a, b) => a.uid - b.uid);
     }
   },
   methods: {
@@ -53,6 +56,12 @@ export default Vue.extend({
       const response = await getDeviceUsers();
       this.users = response.data as Array<DeviceUser>;
     },
+    userPrivilege(priv: number): string {
+        if (priv == 14) {
+          return "Admin"
+        }
+        return "User";
+    }
   },
 });
 </script>

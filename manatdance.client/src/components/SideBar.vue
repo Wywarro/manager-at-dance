@@ -24,9 +24,9 @@
 
       <template v-for="item in items">
         <v-list-item
-          v-if="!item.requireConnection ^ connectedToDevice"
           :key="item.title"
           class="clickable text-left active"
+          :disabled="!connectedToDevice && item.requireConnection"
           link
           :to="item.link"
         >

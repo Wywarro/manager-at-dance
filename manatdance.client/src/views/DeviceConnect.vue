@@ -5,18 +5,29 @@
       <v-col
         lg="5"
       >
-        <v-card
-          v-for="(value, name) in connection"
-          :key="name"
-          class="mb-4 status-card"
-          :style="{ 'border-left-color': color }"
-          outlined
-          :loading="connectLoading"
-        >
-          <v-card-title>{{ name }}</v-card-title>
-          <v-card-subtitle></v-card-subtitle>
-      
-        </v-card>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-center">
+                  Name
+                </th>
+                <th class="text-center">
+                  Value
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(value, name) in connection"
+                :key="name"
+              >
+                <td>{{ name }}</td>
+                <td>{{ value }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
       </v-col>
       <v-col>
         <v-text-field
