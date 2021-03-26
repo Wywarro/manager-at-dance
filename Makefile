@@ -1,6 +1,9 @@
 PROJECT_NAME ?= Manatdance
 
-.PHONY: vue flask electron
+.PHONY: vue flask electron hello
+
+hello:
+	echo hello
 
 vue:
 	cd ./manatdance.client && npm run serve
